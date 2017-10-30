@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Jingjing Guo" />
+
+
+<title>Data Challenge</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Jingjing Guo</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Project Home
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:guo49@purdue.edu">
+    <span class="fa fa-envelope-o"></span>
+     
+    Contact me
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Data Challenge</h1>
+<h4 class="author"><em>Jingjing Guo</em></h4>
+<h4 class="date"><em>Oct 30, 2017</em></h4>
+
+</div>
+
+
+<div id="problem-1-eigenvalues-and-eigenvectors" class="section level2">
+<h2>Problem 1: Eigenvalues and eigenvectors</h2>
+<ol style="list-style-type: decimal">
+<li>Explain why the power method returns the largest eigenvalues and its eigenvector For Matrix <span class="math inline">\(A_{n\times n}\)</span>, with eigenvalues <span class="math inline">\(\lambda _1, \lambda _2 ... \lambda _n\)</span> and eigen vectors <span class="math inline">\(v_1, v_2, ... v_n\)</span> <span class="math inline">\(A x = \lambda x\)</span> Given any <span class="math inline">\(x_0 = c_1 v_1 + c_2 v_2 + ... c_n v_n\)</span>
+<span class="math display">\[\begin{align*}
+A x_0 &amp;= A(c_1 v_1 + c_2 v_2 + ... c_n v_n) 
+= c_1 Av_1 + c_2 Av_2 + ... c_n Av_n 
+= c_1 (\lambda_1 v1) + c_2 (\lambda_2 v_2) + ... c_n (\lambda_n v_n)\\
+A^2 x_0 &amp;= A [c_1 (\lambda_1 v_1) + c_2 (\lambda_2 v_2) +\ldots + c_n (\lambda_n v_n)]= \lambda_1 c_1 A v_1 + \lambda_2 c_2 A v_2 + \ldots + \lambda_n c_n A v_n \\ &amp; = \lambda_1 c_1 (\lambda_1 v_1) + \lambda_2 c_2 (\lambda_2 v_2) + \ldots + \lambda_n c_n (\lambda_n v_n)\\ &amp;= c_1 (\lambda_1^2 v1) + c_2 (\lambda_2^2 v_2) + ... c_n (\lambda_n^2 v_n)\\
+\ldots \\
+A^k x_0 &amp;= c_1 (\lambda_1^k v1) + c_2 (\lambda_2^k v_2) + ... c_n (\lambda_n^k v_n) \\ &amp;= \lambda_1^k [c_1 v_1 + c_2 (\frac{\lambda_2}{\lambda_1})^k v_2 + ... c_n (\frac{\lambda_n}{\lambda_1})^k v_n]
+\end{align*}\]</span>
+<p>Since <span class="math inline">\(\|\lambda _1\| &gt;\|\lambda _i\|\)</span> <span class="math inline">\(\quad \forall i,\quad\)</span>, where $1&lt; i &lt;n $, as <span class="math inline">\(k\)</span> increases, <span class="math inline">\(A^k x_0 \approx \lambda_1^k c_1 v_1\)</span> The iteration therefore approaches <span class="math inline">\(v_1\)</span> and <span class="math inline">\(c_1\)</span>, the largest eigen vector and eigen value.</p></li>
+<li>Explain why the condition number of a symmetric matrix is the ratio of its largest and smallest eigenvalues Answer: Condition number measures the relative change of output due to relative change in input (as a result of approximation etc.); it gives bounds of worst case scenario. For example, solution of <span class="math inline">\(Ax = b\)</span>, <span class="math inline">\(x\)</span>, changes with error in <span class="math inline">\(b\)</span>,<span class="math inline">\(\delta b\)</span>, by <span class="math inline">\(\delta x\)</span>, where <span class="math inline">\(A\)</span> is a symmetric matrix, with <span class="math inline">\(\lambda_min &lt; \ldots &lt; \lambda_max\)</span>. i.e. <span class="math inline">\(A(x+\delta x) = b + \delta b\)</span>. Know that <span class="math inline">\(\lVert x \rVert \geq \frac{\lVert b \rVert}{\lambda_{max}}\)</span> and <span class="math inline">\(\lVert \delta x \rVert \geq \frac{\lVert \delta b \rVert}{\lambda_{min}}\)</span> Therefore, the worst case scenario is:
+<span class="math display">\[\begin{align*}
+\frac{\lVert \delta x \rVert}{\lVert x \rVert} \leq \frac{\lambda_{max}}{\lambda_{min}} \frac{\lVert \delta b\rVert}{\lVert b \rVert}
+\end{align*}\]</span>
+<p>Sensitivity is bounded by <span class="math inline">\(\frac{\lambda_{max}}{\lambda_{min}}\)</span>, therefore this value is the condition number.</p></li>
+</ol>
+</div>
+<div id="problem-2-implementing-priority-queues-and-sorting" class="section level2">
+<h2>Problem 2: Implementing priority queues and sorting</h2>
+<ol style="list-style-type: decimal">
+<li><p>Index of the parent node of element i of the vector: <span class="math inline">\(\lfloor \frac{i}{2} \rfloor\)</span> Index of left child node of element i: <span class="math inline">\(2i\)</span> Index of right child node of element i: <span class="math inline">\(2i + 1\)</span></p></li>
+<li><p>write a function of make_heap to return an empty heap</p></li>
+</ol>
+<pre class="r"><code>make_heap &lt;- function(LMAX) {
+  heap0 &lt;- c(rep(NA, LMAX))
+  return(heap0)
+}
+# example:
+LMAX &lt;- 10
+make_heap(LMAX)</code></pre>
+<pre><code>##  [1] NA NA NA NA NA NA NA NA NA NA</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Write a function to return the max element of the heap:</li>
+</ol>
+<pre class="r"><code>max_heap &lt;- function(heapx){
+  max_element &lt;- heapx[1]
+  return(max_element)
+}
+# example
+heapx = c(5,2,4,2,1)
+max_heap(heapx)</code></pre>
+<pre><code>## [1] 5</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>write a function to remove the max element of the heap</li>
+</ol>
+<pre class="r"><code>removeMax &lt;- function(H){
+  sizeNewH &lt;- length(H) - 1
+  newH &lt;- H
+  maxVal &lt;- H[1]
+  newH[1] &lt;- newH[sizeNewH+1]
+  newH &lt;- head(newH, -1)
+
+  curPos &lt;- 1
+  curLeftChi &lt;- curPos * 2
+  curRightChi &lt;- curPos * 2 + 1
+
+  while ( curRightChi &lt;= sizeNewH &amp;&amp; newH[curPos] &lt; max(newH[c(curLeftChi, curRightChi)]) ){
+    if (newH[curLeftChi] &gt;= newH[curRightChi]){
+      temp &lt;- newH[curLeftChi]
+      newH[curLeftChi] &lt;- newH[curPos]
+      newH[curPos] &lt;- temp
+      curPos &lt;- curLeftChi
+    }else{
+      temp &lt;- newH[curRightChi]
+      newH[curRightChi] &lt;- newH[curPos]
+      newH[curPos] &lt;- temp
+      curPos &lt;- curRightChi
+    }
+    curLeftChi &lt;- curPos * 2
+    curRightChi &lt;- curPos * 2 + 1
+  }
+  if (curLeftChi==sizeNewH &amp;&amp; newH[curPos]&lt;newH[curLeftChi] ){
+    temp &lt;- newH[curLeftChi]
+    newH[curLeftChi] &lt;- newH[curPos]
+    newH[curPos] &lt;- temp
+    curPos &lt;- curLeftChi 
+  }
+  return(newH)
+}
+
+H &lt;- c(10,6,9,4,5,8,2)
+newH &lt;- removeMax(H)
+newH</code></pre>
+<pre><code>## [1] 9 6 8 4 5 2</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Write a function to insert a new element</li>
+</ol>
+<pre class="r"><code>insert &lt;- function(H,num){
+  newH &lt;- H
+  sizeH &lt;- length(newH)
+  newH[sizeH+1] &lt;- num
+  curPos &lt;- sizeH + 1
+  curPar &lt;- floor(curPos/2)
+  while(curPar &gt; 0 &amp;&amp; num &gt; newH[curPar]){
+    temp &lt;- newH[curPar]
+    newH[curPar] &lt;- newH[curPos]
+    newH[curPos] &lt;- temp    
+    curPos &lt;- curPar
+    curPar &lt;- floor(curPos/2)
+  }
+return(newH)
+}
+
+H &lt;- c(10,6,9,4,5,8,2)
+insert(H,6)</code></pre>
+<pre><code>## [1] 10  6  9  6  5  8  2  4</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Sort 20 random numbers</li>
+</ol>
+<pre class="r"><code>heap_sort &lt;- function(numList){
+  N &lt;- length(numList)
+  newH &lt;- c()
+  sorted_list &lt;- rep(0,N)
+  for(num in numList){
+    newH &lt;- insert(newH, num)
+  }
+  i &lt;- 1
+  while(i&lt;=N){
+    sorted_list[i] &lt;- max_heap(newH)
+    newH &lt;- removeMax(newH)
+    i &lt;- i + 1
+  }
+  return(sorted_list)
+}
+
+numList &lt;- rnorm(20)
+numList</code></pre>
+<pre><code>##  [1] -0.6400266  0.5465174  0.0329007 -1.6468766  0.8011619  1.1804675
+##  [7] -0.6129643 -0.9723003  1.7913777  0.8091929  0.1051576 -1.0702413
+## [13]  0.8549416 -1.7689371 -0.9818647 -1.1150100 -0.7866502 -1.0063366
+## [19] -0.4313004 -0.2385991</code></pre>
+<pre class="r"><code>heap_sort(numList)</code></pre>
+<pre><code>##  [1]  1.7913777  1.1804675  0.8549416  0.8091929  0.8011619  0.5465174
+##  [7]  0.1051576  0.0329007 -0.2385991 -0.4313004 -0.6129643 -0.6400266
+## [13] -0.7866502 -0.9723003 -0.9818647 -1.0063366 -1.0702413 -1.1150100
+## [19] -1.6468766 -1.7689371</code></pre>
+</div>
+<div id="problem-3-the-knapsack-problem" class="section level2">
+<h2>Problem 3: The Knapsack problem</h2>
+<p>Write a function: inputs: weight <span class="math inline">\(w\)</span>, value <span class="math inline">\(v\)</span> and capacity $W_knapsack</p>
+<pre class="r"><code>knapsackDP &lt;- function(w,v,W_knapsack){
+  N &lt;- length(v)
+  Vs &lt;- rep(0,W_knapsack)
+  obj_count &lt;- matrix( rep(0,W_knapsack*N), nrow=W_knapsack, ncol=N)
+  
+  Vs[1] &lt;- max(v[w&lt;=1])
+  r &lt;- which.max(v[w&lt;=1])
+  obj_count[1,r] &lt;- obj_count[1,r] + 1
+  
+  for(i in 2:W_knapsack){
+    max_check &lt;- rep(0,N)
+    combo_i &lt;- matrix(rep(0,N*N), nrow=N, ncol=N)
+    for(j in 1:N){
+      if(w[j] &lt; i){
+        max_check[j] &lt;- Vs[i -w[j]] + v[j]
+        combo_i[j,] &lt;- obj_count[(i-w[j]),]
+        combo_i[j,j] &lt;- combo_i[j,j] + 1
+      }else if (w[j]==i){
+        max_check[j] &lt;- v[j]
+        combo_i[j,j] &lt;- combo_i[j,j] + 1
+      }
+    }
+    Vs[i] &lt;- max(max_check)
+    r &lt;- which.max(max_check)
+    max_combo_i &lt;- combo_i[r,]
+    obj_count[i,] &lt;- max_combo_i
+  }
+  
+  list2return &lt;- list(&quot;max_value&quot; = Vs[W_knapsack], &quot;items&quot; = obj_count[W_knapsack,])
+  return(list2return)
+}
+
+w = c(1,2,3,4,5,6)
+v = c(1,8,10,10,19,25) 
+W_knapsack = 25
+knapsackDP(w,v,W_knapsack)</code></pre>
+<pre><code>## $max_value
+## [1] 102
+## 
+## $items
+## [1] 0 1 0 0 1 3</code></pre>
+</div>
+<div id="problem-4-markov-chains" class="section level2">
+<h2>Problem 4: Markov Chains</h2>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(P(S_2=j,S_1=i) = A_{ij}\pi^1_i\)</span></p></li>
+<li><p><span class="math inline">\(P(S_2=j) = (A \pi^1)_j\)</span></p></li>
+<li><p><span class="math inline">\(\pi^2 = A \pi^1\)</span></p></li>
+<li><p><span class="math inline">\(N^2\)</span> multiplications and <span class="math inline">\(N(N-1)\)</span> additions, hence complexity is <span class="math inline">\(O(N^2)\)</span></p></li>
+<li><p><span class="math inline">\(\pi^t = A^(t-1)*\pi = A*A*A*...*A*\pi\)</span></p></li>
+</ol>
+<p>First we multiply A*pi which is of order O(N^2). Then we multiply the outcome by A which is of order <span class="math inline">\(O(N^2)\)</span> Then we multiply the outcome by A which is of order <span class="math inline">\(O(N^2)\)</span> … Then we multiply the outcome by A which is of order <span class="math inline">\(O(N^2)\)</span></p>
+<p>We therefore have <span class="math inline">\(O(N^2)+O(N^2)+...+O(N^2) = t*O(N^2) = O(t*N^2)\)</span></p>
+<ol start="6" style="list-style-type: decimal">
+<li><p><span class="math inline">\(N^T\)</span> sequences</p></li>
+<li>summations</li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li>how many summations? <span class="math inline">\(N^(t-1)\)</span></li>
+<li>To calculate <span class="math inline">\([P(S_t=1),P(S_t=2),...,P(S_t=N)]\)</span> we need <span class="math inline">\(N^(t-1)+N^(t-1)+...+N^(t-1)=N^t\)</span> additions. Since the elements of this vector sum to one we could compute the last one as <span class="math inline">\(P(S_t=N)=1-P(S_t=1)-P(S_t=2)-...-P(S_t=N-1)\)</span> and save a few operations, but the order of the complexity is the same.\ (In (5) the order grows linearly in t, but in (7) the order grows exponentially in t (much slower).)</li>
+</ol>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

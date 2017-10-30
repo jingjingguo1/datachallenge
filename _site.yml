@@ -1,0 +1,18 @@
+name: "Jingjing Guo"                                 
+output_dir: "."
+navbar:
+  title: "Jingjing Guo"                               
+  type: inverse
+  left:
+    - text: "Project Home"
+      icon: fa-home
+      # href: dataChallenge.html
+      href: index.html
+  right:
+    - text: "Contact me"
+      icon: fa-envelope-o
+      href: mailto:guo49@purdue.edu                    
+output:
+  html_document:
+    theme: cosmo
+    highlight: textmate
