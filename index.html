@@ -209,73 +209,56 @@ $(document).ready(function () {
 </div>
 
 
-<div id="problem-1-implementing-priority-queues-and-sorting" class="section level2">
-<h2>Problem 1: Implementing priority queues and sorting</h2>
-<ol style="list-style-type: decimal">
-<li><p>Index of the parent node of element i of the vector: <span class="math inline">\(\lfloor \frac{i}{2} \rfloor\)</span> Index of left child node of element i: <span class="math inline">\(2i\)</span> Index of right child node of element i: <span class="math inline">\(2i + 1\)</span></p></li>
-<li><p>write a function of make_heap to return an empty heap</p></li>
-</ol>
-<pre class="r"><code>make_heap &lt;- function(LMAX) {
-  heap0 &lt;- c(rep(NA, LMAX))
-  return(heap0)
-}
-# example:
-LMAX &lt;- 10
-make_heap(LMAX)</code></pre>
-<pre><code>##  [1] NA NA NA NA NA NA NA NA NA NA</code></pre>
-<ol start="3" style="list-style-type: decimal">
-<li>Write a function to return the max element of the heap:</li>
-</ol>
-<pre class="r"><code>max_heap &lt;- function(heapx){
-  max_element &lt;- heapx[1]
-  return(max_element)
-}
-# example
-heapx = c(5,2,4,2,1)
-max_heap(heapx)</code></pre>
-<pre><code>## [1] 5</code></pre>
-<ol start="4" style="list-style-type: decimal">
-<li>write a function to remove the max element of the heap</li>
-</ol>
-<pre class="r"><code>removeMax &lt;- function(H){
-  sizeNewH &lt;- length(H) - 1
-  newH &lt;- H
-  maxVal &lt;- H[1]
-  newH[1] &lt;- newH[sizeNewH+1]
-  newH &lt;- head(newH, -1)
+<div id="geographical-distribution-of-flight-delays" class="section level2">
+<h2>Geographical Distribution of Flight Delays</h2>
+<pre class="r"><code>airlines &lt;- read.csv(&#39;../airlines.csv&#39;, header=TRUE)
+airports &lt;- read.csv(&#39;../airports.csv&#39;, header=TRUE)
+#flights &lt;- read.csv(&#39;../flights.csv&#39;, header=TRUE)
 
-  curPos &lt;- 1
-  curLeftChi &lt;- curPos * 2
-  curRightChi &lt;- curPos * 2 + 1
+#plot 1
+aps &lt;- as.character(levels(factor(unlist(flights$ORIGIN_AIRPORT[nchar(as.character(flights$ORIGIN_AIRPORT))==3]))))
+n_aps &lt;- length(aps)
+ap_delays &lt;- vector(length = n_aps)
+for(i in 1:n_aps){
+  ap_delays[i] &lt;- sum(flights$DEPARTURE_DELAY[ flights$ORIGIN_AIRPORT==aps[i] &amp; flights$DEPARTURE_DELAY &gt; 0], na.rm=TRUE)
+}
+library(maps)
+map(&quot;state&quot;)
+#normalization
+psize&lt;- (ap_delays - min(ap_delays))*5/(max(ap_delays) - min(ap_delays))+0.5
+points(airports$LONGITUDE, airports$LATITUDE, col=&quot;black&quot;, pch = 21, cex=psize, bg=&quot;red&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>
+<div id="leading-factors-of-flight-delays" class="section level2">
+<h2>Leading Factors of Flight Delays</h2>
+<pre class="r"><code>flights$MONTH &lt;- as.factor(flights$MONTH)
+ggplot(flights, aes(x=MONTH, fill=MONTH))+geom_bar()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>#####################################
+facts &lt;- factor(rep(c(&quot;ATC&quot;,&quot;Security&quot;,&quot;Airline&quot;,&quot;Aircraft&quot;,&quot;Weather&quot;),each = 14))
+ls &lt;- vector(length=70)
+i &lt;- 1
+als &lt;- levels(dds$AIRLINE)
 
-  while ( curRightChi &lt;= sizeNewH &amp;&amp; newH[curPos] &lt; max(newH[c(curLeftChi, curRightChi)]) ){
-    if (newH[curLeftChi] &gt;= newH[curRightChi]){
-      temp &lt;- newH[curLeftChi]
-      newH[curLeftChi] &lt;- newH[curPos]
-      newH[curPos] &lt;- temp
-      curPos &lt;- curLeftChi
-    }else{
-      temp &lt;- newH[curRightChi]
-      newH[curRightChi] &lt;- newH[curPos]
-      newH[curPos] &lt;- temp
-      curPos &lt;- curRightChi
-    }
-    curLeftChi &lt;- curPos * 2
-    curRightChi &lt;- curPos * 2 + 1
-  }
-  if (curLeftChi==sizeNewH &amp;&amp; newH[curPos]&lt;newH[curLeftChi] ){
-    temp &lt;- newH[curLeftChi]
-    newH[curLeftChi] &lt;- newH[curPos]
-    newH[curPos] &lt;- temp
-    curPos &lt;- curLeftChi 
-  }
-  return(newH)
+for(al in als){
+  ls[i] &lt;- sum(dds[[27]][ dds$AIRLINE == al ])
+  ls[i+1] &lt;- sum(dds[[28]][ dds$AIRLINE == al ])
+  ls[i+2] &lt;- sum(dds[[29]][ dds$AIRLINE == al ])
+  ls[i+3] &lt;- sum(dds[[30]][ dds$AIRLINE == al ])
+  ls[i+4] &lt;- sum(dds[[31]][ dds$AIRLINE == al ])
+  i&lt;-i+5
 }
 
-H &lt;- c(10,6,9,4,5,8,2)
-newH &lt;- removeMax(H)
-newH</code></pre>
-<pre><code>## [1] 9 6 8 4 5 2</code></pre>
+ls1&lt;- (ls - min(ls))*100/(max(ls) - min(ls))+1
+
+dat1 &lt;- data.frame(
+  causes = facts,
+  Airlines = rep(als,5), levels=als,
+  Delays = ls
+)
+ggplot(data=dat1, aes(x=Airlines, y=Delays, fill=causes)) +
+  geom_bar(stat=&quot;identity&quot;, position=position_dodge())</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
 </div>
 
 

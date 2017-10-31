@@ -10,72 +10,55 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+## Geographical Distribution of Flight Delays
 
-## Problem 1: Implementing priority queues and sorting
-1. Index of the parent node of element i of the vector: $\lfloor \frac{i}{2} \rfloor$
-Index of left child node of element i: $2i$
-Index of right child node of element i: $2i + 1$
-
-2. write a function of make_heap to return an empty heap
 ```{r}
-make_heap <- function(LMAX) {
-  heap0 <- c(rep(NA, LMAX))
-  return(heap0)
+airlines <- read.csv('../airlines.csv', header=TRUE)
+airports <- read.csv('../airports.csv', header=TRUE)
+#flights <- read.csv('../flights.csv', header=TRUE)
+
+#plot 1
+aps <- as.character(levels(factor(unlist(flights$ORIGIN_AIRPORT[nchar(as.character(flights$ORIGIN_AIRPORT))==3]))))
+n_aps <- length(aps)
+ap_delays <- vector(length = n_aps)
+for(i in 1:n_aps){
+  ap_delays[i] <- sum(flights$DEPARTURE_DELAY[ flights$ORIGIN_AIRPORT==aps[i] & flights$DEPARTURE_DELAY > 0], na.rm=TRUE)
 }
-# example:
-LMAX <- 10
-make_heap(LMAX)
+library(maps)
+map("state")
+#normalization
+psize<- (ap_delays - min(ap_delays))*5/(max(ap_delays) - min(ap_delays))+0.5
+points(airports$LONGITUDE, airports$LATITUDE, col="black", pch = 21, cex=psize, bg="red")
 ```
 
-3. Write a function to return the max element of the heap:
+
+## Leading Factors of Flight Delays
 ```{r}
-max_heap <- function(heapx){
-  max_element <- heapx[1]
-  return(max_element)
-}
-# example
-heapx = c(5,2,4,2,1)
-max_heap(heapx)
-```
+flights$MONTH <- as.factor(flights$MONTH)
+ggplot(flights, aes(x=MONTH, fill=MONTH))+geom_bar()
 
-4. write a function to remove the max element of the heap
-```{r}
-removeMax <- function(H){
-  sizeNewH <- length(H) - 1
-  newH <- H
-  maxVal <- H[1]
-  newH[1] <- newH[sizeNewH+1]
-  newH <- head(newH, -1)
+#####################################
+facts <- factor(rep(c("ATC","Security","Airline","Aircraft","Weather"),each = 14))
+ls <- vector(length=70)
+i <- 1
+als <- levels(dds$AIRLINE)
 
-  curPos <- 1
-  curLeftChi <- curPos * 2
-  curRightChi <- curPos * 2 + 1
-
-  while ( curRightChi <= sizeNewH && newH[curPos] < max(newH[c(curLeftChi, curRightChi)]) ){
-    if (newH[curLeftChi] >= newH[curRightChi]){
-      temp <- newH[curLeftChi]
-      newH[curLeftChi] <- newH[curPos]
-      newH[curPos] <- temp
-      curPos <- curLeftChi
-    }else{
-      temp <- newH[curRightChi]
-      newH[curRightChi] <- newH[curPos]
-      newH[curPos] <- temp
-      curPos <- curRightChi
-    }
-    curLeftChi <- curPos * 2
-    curRightChi <- curPos * 2 + 1
-  }
-  if (curLeftChi==sizeNewH && newH[curPos]<newH[curLeftChi] ){
-    temp <- newH[curLeftChi]
-    newH[curLeftChi] <- newH[curPos]
-    newH[curPos] <- temp
-    curPos <- curLeftChi 
-  }
-  return(newH)
+for(al in als){
+  ls[i] <- sum(dds[[27]][ dds$AIRLINE == al ])
+  ls[i+1] <- sum(dds[[28]][ dds$AIRLINE == al ])
+  ls[i+2] <- sum(dds[[29]][ dds$AIRLINE == al ])
+  ls[i+3] <- sum(dds[[30]][ dds$AIRLINE == al ])
+  ls[i+4] <- sum(dds[[31]][ dds$AIRLINE == al ])
+  i<-i+5
 }
 
-H <- c(10,6,9,4,5,8,2)
-newH <- removeMax(H)
-newH
+ls1<- (ls - min(ls))*100/(max(ls) - min(ls))+1
+
+dat1 <- data.frame(
+  causes = facts,
+  Airlines = rep(als,5), levels=als,
+  Delays = ls
+)
+ggplot(data=dat1, aes(x=Airlines, y=Delays, fill=causes)) +
+  geom_bar(stat="identity", position=position_dodge())
 ```

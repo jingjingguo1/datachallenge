@@ -6,7 +6,6 @@ navbar:
   left:
     - text: "Project Home"
       icon: fa-home
-      # href: dataChallenge.html
       href: index.html
   right:
     - text: "Contact me"
