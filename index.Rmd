@@ -34,10 +34,6 @@ points(airports$LONGITUDE, airports$LATITUDE, col="black", pch = 21, cex=psize, 
 
 ## Leading Factors of Flight Delays
 ```{r}
-flights$MONTH <- as.factor(flights$MONTH)
-ggplot(flights, aes(x=MONTH, fill=MONTH))+geom_bar()
-
-#####################################
 facts <- factor(rep(c("ATC","Security","Airline","Aircraft","Weather"),each = 14))
 ls <- vector(length=70)
 i <- 1

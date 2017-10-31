@@ -231,11 +231,7 @@ points(airports$LONGITUDE, airports$LATITUDE, col=&quot;black&quot;, pch = 21, c
 </div>
 <div id="leading-factors-of-flight-delays" class="section level2">
 <h2>Leading Factors of Flight Delays</h2>
-<pre class="r"><code>flights$MONTH &lt;- as.factor(flights$MONTH)
-ggplot(flights, aes(x=MONTH, fill=MONTH))+geom_bar()</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<pre class="r"><code>#####################################
-facts &lt;- factor(rep(c(&quot;ATC&quot;,&quot;Security&quot;,&quot;Airline&quot;,&quot;Aircraft&quot;,&quot;Weather&quot;),each = 14))
+<pre class="r"><code>facts &lt;- factor(rep(c(&quot;ATC&quot;,&quot;Security&quot;,&quot;Airline&quot;,&quot;Aircraft&quot;,&quot;Weather&quot;),each = 14))
 ls &lt;- vector(length=70)
 i &lt;- 1
 als &lt;- levels(dds$AIRLINE)
@@ -258,7 +254,7 @@ dat1 &lt;- data.frame(
 )
 ggplot(data=dat1, aes(x=Airlines, y=Delays, fill=causes)) +
   geom_bar(stat=&quot;identity&quot;, position=position_dodge())</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 
 
